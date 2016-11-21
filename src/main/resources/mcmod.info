@@ -1,0 +1,16 @@
+[
+{
+  "modid": "botaniashedding",
+  "name": "BotaniaShedding",
+  "description": "Botania's passive mob shedding without the Botania.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["YeOldeSoupe"],
+  "credits": "Vazkii and SoundLogic, whose code comprises 90% of this mod.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
