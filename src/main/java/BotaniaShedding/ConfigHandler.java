@@ -8,7 +8,7 @@
  * 
  * File Created @ [Jan 13, 2014, 9:01:32 PM (GMT)]
  */
-package vazkii.botania.common.core.handler;
+package botaniashedding;
 
 import botaniashedding.SheddingHandler;
 
