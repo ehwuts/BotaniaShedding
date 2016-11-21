@@ -30,8 +30,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import vazkii.botania.common.lexicon.LexiconData;
-import vazkii.botania.common.lexicon.page.PageShedding;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public final class SheddingHandler {
@@ -64,26 +62,15 @@ public final class SheddingHandler {
 		return patterns.size() > 0;
 	}
 
-	public static void addToLexicon() {
-		if(!hasShedding())
-			return;
-
-		int i = 1;
-		for(ShedPattern pattern : patterns) {
-			PageShedding page = new PageShedding(String.valueOf(i), (String)EntityList.classToStringMapping.get(pattern.EntityClass), pattern.lexiconSize, pattern.getItemStack());
-			LexiconData.shedding.addPage(page);
-		}
-	}
-
 	public static void loadFromConfig(Configuration config) {
-		defaultPatterns.add(new ShedPattern(EntityChicken.class, new ItemStack(Items.feather), 26000, 20));
-		defaultPatterns.add(new ShedPattern(EntitySquid.class, new ItemStack(Items.dye), 18000, 20));
-		defaultPatterns.add(new ShedPattern(EntityVillager.class, new ItemStack(Items.emerald), 226000, 40));
-		defaultPatterns.add(new ShedPattern(EntitySpider.class, new ItemStack(Items.string), 12000, 40));
-		defaultPatterns.add(new ShedPattern(EntityBlaze.class, new ItemStack(Items.blaze_powder), 8000, 40));
-		defaultPatterns.add(new ShedPattern(EntityGhast.class, new ItemStack(Items.ghast_tear), 9001, 30));
-		defaultPatterns.add(new ShedPattern(EntitySkeleton.class, new ItemStack(Items.bone), 36000, 40));
-		defaultPatterns.add(new ShedPattern(EntitySlime.class, new ItemStack(Items.slime_ball), 21000, 40));
+		defaultPatterns.add(new ShedPattern(EntityChicken.class, new ItemStack(Items.feather), 26000));
+		defaultPatterns.add(new ShedPattern(EntitySquid.class, new ItemStack(Items.dye), 18000));
+		defaultPatterns.add(new ShedPattern(EntityVillager.class, new ItemStack(Items.emerald), 226000));
+		defaultPatterns.add(new ShedPattern(EntitySpider.class, new ItemStack(Items.string), 12000));
+		defaultPatterns.add(new ShedPattern(EntityBlaze.class, new ItemStack(Items.blaze_powder), 8000));
+		defaultPatterns.add(new ShedPattern(EntityGhast.class, new ItemStack(Items.ghast_tear), 9001));
+		defaultPatterns.add(new ShedPattern(EntitySkeleton.class, new ItemStack(Items.bone), 36000));
+		defaultPatterns.add(new ShedPattern(EntitySlime.class, new ItemStack(Items.slime_ball), 21000));
 
 		ArrayList<String> defaultNames = new ArrayList<String>();
 
@@ -107,13 +94,11 @@ public final class SheddingHandler {
 		String itemName = "";
 		int metadata = 0;
 		int rate = -1;
-		int lexiconSize = 40;
 
 		if(defaultPattern != null) {
 			itemName = Item.itemRegistry.getNameForObject(defaultPattern.getItemStack().getItem());
 			metadata = defaultPattern.getItemStack().getItemDamage();
 			rate = defaultPattern.rate;
-			lexiconSize = defaultPattern.lexiconSize;
 		}
 
 		Property prop = config.get("Shedding", key + ".item", itemName);
@@ -121,10 +106,9 @@ public final class SheddingHandler {
 		itemName = prop.getString();
 		rate = config.get("Shedding", key + ".rate", rate).getInt();
 		metadata = config.get("Shedding", key + ".metadata", metadata).getInt();
-		lexiconSize = config.get("Shedding", key + ".lexiconDisplaySize", lexiconSize).getInt();
 
 		if(itemName != null && !itemName.isEmpty() && rate != -1)
-			patterns.add(new ShedPattern((Class<?>) EntityList.stringToClassMapping.get(key), new ItemStack((Item) Item.itemRegistry.getObject(itemName), 1, metadata), rate, lexiconSize));
+			patterns.add(new ShedPattern((Class<?>) EntityList.stringToClassMapping.get(key), new ItemStack((Item) Item.itemRegistry.getObject(itemName), 1, metadata), rate));
 	}
 
 	public static class ShedPattern {
@@ -132,13 +116,11 @@ public final class SheddingHandler {
 		Class EntityClass;
 		ItemStack itemStack;
 		int rate;
-		int lexiconSize;
 
-		public ShedPattern(Class EntityClass, ItemStack itemStack, int rate, int lexiconSize) {
+		public ShedPattern(Class EntityClass, ItemStack itemStack, int rate) {
 			this.EntityClass = EntityClass;
 			this.itemStack = itemStack;
 			this.rate = rate;
-			this.lexiconSize = lexiconSize;
 		}
 		public ItemStack getItemStack() {
 			return itemStack.copy();
