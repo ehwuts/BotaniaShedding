@@ -1,7 +1,6 @@
 package botaniashedding;
 
 import botaniashedding.SheddingHandler;
-import botaniashedding.ConfigHandler;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -25,7 +24,7 @@ public class BotaniaShedding
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		config = new Configuration(configFile);
+		config = new Configuration(event.getSuggestedConfigurationFile());
 
 		config.load();
 		saveConfig();
